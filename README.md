@@ -15,21 +15,20 @@ Program přijímá přes argument `-i` nebo `--input` cestu k souboru se vstupem
 Přes argument `-v` nebo `--verbosity` lze nastavit, jak moc má být zavolaný SAT solver výřečný.
 Tento argument se předává přímo použitému solveru.
 
-Jaký Glucose solver se má použít se nastavuje pomocí argumentu `-s` nebo `--solver`.
+Pomocí argumentu `-s` nebo `--solver` se nastavuje, jaký Glucose solver se má použít.
 Solver se musí nacházet ve stejném adresáři, jako spouštěný program.
 
 Pomocí `-o` nebo `--output` lze nastavit jméno souboru s vygenerovanou DIMACS CNF formulí.
 
 ## Formát vstupu a výstupu
 
-Na prvním řádku vstupu přijímá program dvě celá čísla `V`, `E` oddělená mezerou
-— a odpovídají počtu vrcholů a hran grafu.
+Na prvním řádku vstupu přijímá program dvě celá čísla `V`, `E` oddělená mezerou.
+Tato čísla odpovídají počtu vrcholů a hran grafu.
 
-Na dalších `E` řádcích se poté musí nacházet hrany ve formátu
-dvou čísel vrcholů oddělených mezerou.
+Na dalších `E` řádcích se poté nachází hrany reprezentované čísly jejich dvou vrcholů oddělené mezerou.
 Indexy vrcholů musí být v uzavřeném intervalu od 0 do `V-1`.
 
-Výstup obsahuje výpis ze solveru a seznam hran, které byly vybrány.
+Výstup obsahuje výpis ze solveru a v případě nalezení řešení i seznam hran, které byly programem vybrány.
 
 ## Kódování problému do SAT
 
@@ -47,9 +46,9 @@ Program využívá dva typy proměnných:
 ### Princip kódování
 
 Pro každý vrchol `v` kóduji podmínku na stupeň pomocí simulace počítadla, které postupně prochází jednotlivé hrany vrcholu a kontroluje, zda je na konci stupeň 0 nebo 3. To je realizováno implikacemi,
-které vynucují, že musí být skutečný stupeň vždy ohodnocen `True`.
+které vynucují, že musí být skutečný stupeň vždy ohodnocen `True`. Podmínky nicméně nevynucují, aby stupeň označený `True` odpovídal skutečnému stupni vrcholu, k řešení to není třeba.
 
-Implikace jsou automaticky programem převedeny na odpovídající množinu klauzulí. Využívá se toho, že mají všechny implikace na levé straně několik literárů oddělených pomocí `AND` a na pravé jediný literár.
+Implikace jsou automaticky programem převedeny na odpovídající množinu klauzulí. Využívá se toho, že mají všechny implikace na levé straně několik literárů oddělených pomocí `AND` a na pravé jeden literár.
  
 ### Typy implikací
 
@@ -71,7 +70,7 @@ Program využívá tři základní formy implikací:
 
 Program přidává klauzuli obsahující všechny proměnné odpovídající hranám a zajišťuje tak, že musí být vybrána alespoň jedna hrana, tedy že F není prázdná.
 
-Dále přidává klauzule, které pro každý vrchol říkají, že `var(0, c) = True` pro `c=0` a jinak `False` a klauzule vynucující a zakazující stupně na konci sčítání.
+Dále přidává klauzule, které pro každý vrchol říkají, že `var(0, c) = True` pro `c=0` a jinak `False` a také klauzule vynucující a zakazující stupně na konci sčítání.
 
 ### Alternativní kódování
 
@@ -85,14 +84,14 @@ Jsou dvou druhů:
 
 ### Náhodný graf
 
-Tady jsem nejprve vygeneroval úplný bipartitní graf o dvou paritách se třemi vrcholy v každé, aby byla instance splnitelná, a poté jsem do grafu doplnil náhodně další hrany.
+Tady jsem nejprve vygeneroval úplný bipartitní graf se třemi vrcholy v každé partitě, aby byla instance splnitelná, a poté jsem do grafu doplnil náhodně další hrany.
 
 Na řídkém grafu se 3000 vrcholy a 15000 hranami běžel solver 22 sekund.
 
 Úplný graf o 100 vrcholech potřeboval 15 sekund, i přesto, že je řešením každý existující kubický graf o 100 či méně vrcholech a dají se případná řešení generovat velice jednoduše.
 
-Úplný graf o 200 vrcholech mi doběhl až 10 minutách a 40 sekundách.
+Úplný graf o 200 vrcholech mi doběhl až po 10 minutách a 40 sekundách.
 
 ### Cesta
 
-Tady jsem vygeneroval úplný bipartitní graf o dvou paritách se třemi vrcholy v každé, aby byla instance splnitelná a k němu jsem připojil dlouhou cestu. I přes jednoduchou strukturu grafu stačilo navýšit délku cesty na ~100000 hran a solver potom potřeboval 14 sekund.
+Tady jsem vygeneroval úplný bipartitní graf se třemi vrcholy v každé partitě, aby byla instance splnitelná, a k němu jsem připojil dlouhou cestu. I přes jednoduchou strukturu grafu stačilo navýšit délku cesty na ~100000 hran a solver potom potřeboval 14 sekund k nalezení řešení.

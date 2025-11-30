@@ -71,7 +71,7 @@ Program využívá tři základní formy implikací:
 
 Program přidává klauzuli obsahující všechny proměnné odpovídající hranám a zajišťuje tak, že musí být vybrána alespoň jedna hrana, tedy že F není prázdná.
 
-Dále přidává klauzule, které povolují, případně zakazují jednotlivé stupně.
+Dále přidává klauzule, které pro každý vrchol říkají, že `var(0, c) = True` pro `c=0` a jinak `False` a klauzule vynucující a zakazující stupně na konci sčítání.
 
 ### Alternativní kódování
 

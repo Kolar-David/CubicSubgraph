@@ -94,4 +94,4 @@ Na řídkém grafu se 3000 vrcholy a 15000 hranami běžel solver 22 sekund.
 
 ### Cesta
 
-Tady jsem vygeneroval úplný bipartitní graf se třemi vrcholy v každé partitě, aby byla instance splnitelná, a k němu jsem připojil dlouhou cestu. I přes jednoduchou strukturu grafu stačilo navýšit délku cesty na ~100000 hran a solver potom potřeboval 14 sekund k nalezení řešení.
+Tady jsem vygeneroval úplný bipartitní graf se třemi vrcholy v každé partitě, aby byla instance splnitelná, a k němu jsem připojil dlouhou cestu. I přes jednoduchou strukturu grafu stačilo navýšit délku cesty na přibližně 100000 hran a solver potom potřeboval 14 sekund k nalezení řešení.
